@@ -3,10 +3,10 @@ import pandas as pd
 from datetime import datetime
 from openai import OpenAI
 
-# ---- AI Setup ----
+
 client = OpenAI(api_key="YOUR_API_KEY")
 
-# ---- Load Tasks ----
+
 def load_tasks():
     try:
         return pd.read_csv("tasks.csv")
@@ -18,11 +18,11 @@ def save_tasks(df):
 
 tasks = load_tasks()
 
-# ---- UI ----
+
 st.set_page_config(page_title="AI Task Tracker", layout="wide")
 st.title("📚 AI Student Task Tracker")
 
-# ---- Add Task ----
+
 st.sidebar.header("➕ Add New Task")
 
 task_name = st.sidebar.text_input("Task Name")
@@ -40,11 +40,10 @@ if st.sidebar.button("Add Task"):
     save_tasks(tasks)
     st.success("Task Added!")
 
-# ---- Display Tasks ----
+
 st.subheader("📋 Your Tasks")
 st.dataframe(tasks)
 
-# ---- Mark Complete ----
 task_to_complete = st.selectbox("Mark Task as Completed", tasks["Task"])
 
 if st.button("Complete Task"):
@@ -52,7 +51,6 @@ if st.button("Complete Task"):
     save_tasks(tasks)
     st.success("Task Completed!")
 
-# ---- AI Suggestions ----
 st.subheader("🤖 AI Study Assistant")
 
 user_input = st.text_area("Ask AI (e.g., break my task into steps)")
@@ -70,7 +68,7 @@ if st.button("Get AI Help"):
     else:
         st.warning("Please enter a question!")
 
-# ---- Analytics ----
+
 st.subheader("📊 Progress")
 
 completed = len(tasks[tasks["Status"] == "Done"])
